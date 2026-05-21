@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ali EzzEldin — ML & Computer Vision Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0f0f0f;
+    --cream: #f7f4ef;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --warm: #8b6f47;
+    --muted: #6b6560;
+    --card-bg: #ffffff;
+    --border: #e4ddd4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.65; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 6%;
+    background: rgba(247,244,239,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--ink); text-decoration: none; letter-spacing: -0.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; font-size: 0.88rem; font-weight: 500;
+    color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; padding: 6rem 6% 4rem; gap: 4rem;
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(139,111,71,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-text { position: relative; }
+  .hero-eyebrow { font-size: 0.8rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 1.2rem; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 400; font-style: italic; color: var(--warm); margin-bottom: 1.8rem; }
+  .hero-bio { font-size: 1rem; color: var(--muted); max-width: 460px; margin-bottom: 2.5rem; line-height: 1.8; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { display: inline-block; padding: 0.85rem 2rem; background: var(--ink); color: #fff; text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: background 0.25s, transform 0.2s; }
+  .btn-primary:hover { background: var(--gold); transform: translateY(-2px); }
+  .btn-outline { display: inline-block; padding: 0.85rem 2rem; border: 1.5px solid var(--ink); color: var(--ink); text-decoration: none; font-size: 0.88rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.25s; }
+  .btn-outline:hover { background: var(--ink); color: #fff; transform: translateY(-2px); }
+
+  .hero-image-wrap { position: relative; display: flex; justify-content: flex-end; }
+  .hero-photo-frame { width: min(420px, 90%); aspect-ratio: 3/4; position: relative; }
+  .hero-photo-frame::before { content: ''; position: absolute; inset: -12px; border: 2px solid var(--gold-light); transform: translate(12px, 12px); z-index: 0; }
+  .hero-photo { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; background: linear-gradient(135deg, #d4c5a9 0%, #b8a48a 100%); display: flex; align-items: center; justify-content: center; font-family: 'DM Sans', sans-serif; color: var(--warm); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .photo-placeholder-text { text-align: center; }
+  .photo-icon { font-size: 3rem; display: block; margin-bottom: 0.5rem; opacity: 0.5; }
+
+  /* ─── SECTIONS COMMON ─── */
+  section { padding: 6rem 6%; }
+  .section-label { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); font-weight: 500; margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  .section-divider { width: 60px; height: 3px; background: var(--gold); margin-bottom: 2.5rem; }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--ink); color: var(--cream); }
+  #about .section-title { color: var(--cream); }
+  #about .section-divider { background: var(--gold); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+  .about-photo { aspect-ratio: 1; background: linear-gradient(135deg, #2a2520 0%, #1a1510 100%); border: 1px solid rgba(201,168,76,0.25); display: flex; align-items: center; justify-content: center; color: var(--warm); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; flex-direction: column; gap: 0.5rem; }
+  .about-bio { color: rgba(247,244,239,0.75); font-size: 1.05rem; line-height: 1.85; margin-bottom: 1.5rem; }
+  .about-details { display: flex; flex-direction: column; gap: 0.6rem; }
+  .about-detail { display: flex; gap: 1rem; align-items: baseline; font-size: 0.92rem; }
+  .detail-label { color: var(--gold); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; min-width: 80px; flex-shrink: 0; }
+  .detail-value { color: rgba(247,244,239,0.85); }
+
+  /* ─── SKILLS ─── */
+  #skills { background: var(--cream); }
+  .skills-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+  .skill-card { background: var(--card-bg); border: 1px solid var(--border); padding: 2rem; transition: transform 0.25s, box-shadow 0.25s; }
+  .skill-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+  .skill-card-icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
+  .skill-card-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-tag { background: var(--cream); border: 1px solid var(--border); padding: 0.25rem 0.7rem; font-size: 0.78rem; color: var(--muted); letter-spacing: 0.03em; }
+
+  /* ─── EXPERIENCE ─── */
+  #experience { background: #f2ede5; }
+  .exp-list { display: flex; flex-direction: column; gap: 0; }
+  .exp-item { display: grid; grid-template-columns: 180px 1fr; gap: 2rem; padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+  .exp-item:first-child { border-top: 1px solid var(--border); }
+  .exp-dates { font-size: 0.82rem; color: var(--muted); letter-spacing: 0.05em; padding-top: 0.2rem; }
+  .exp-year { font-size: 1rem; font-weight: 500; color: var(--gold); display: block; }
+  .exp-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .exp-company { font-size: 0.88rem; color: var(--gold); margin-bottom: 0.8rem; font-weight: 500; }
+  .exp-desc { font-size: 0.92rem; color: var(--muted); line-height: 1.75; }
+
+  /* ─── EDUCATION ─── */
+  #education { background: var(--cream); }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .edu-card { background: var(--card-bg); border: 1px solid var(--border); padding: 2rem; position: relative; overflow: hidden; }
+  .edu-card::after { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
+  .edu-degree { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .edu-school { font-size: 0.9rem; color: var(--gold); font-weight: 500; margin-bottom: 0.3rem; }
+  .edu-year { font-size: 0.82rem; color: var(--muted); }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--ink); color: var(--cream); }
+  #projects .section-title { color: var(--cream); }
+  #projects .section-divider { background: var(--gold); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+  .project-card { background: #181512; border: 1px solid rgba(201,168,76,0.2); overflow: hidden; transition: transform 0.25s, border-color 0.25s; }
+  .project-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .project-img { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, #2a2218 0%, #1a1a14 100%); display: flex; align-items: center; justify-content: center; color: var(--warm); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; flex-direction: column; gap: 0.4rem; border-bottom: 1px solid rgba(201,168,76,0.15); }
+  .project-body { padding: 1.8rem; }
+  .project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .project-tag { background: rgba(201,168,76,0.12); color: var(--gold-light); padding: 0.2rem 0.65rem; font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; }
+  .project-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: var(--cream); margin-bottom: 0.5rem; }
+  .project-client { font-size: 0.82rem; color: var(--gold); margin-bottom: 0.8rem; }
+  .project-desc { font-size: 0.88rem; color: rgba(247,244,239,0.6); line-height: 1.75; margin-bottom: 1.2rem; }
+  .project-result { font-size: 0.82rem; color: rgba(247,244,239,0.5); border-top: 1px solid rgba(201,168,76,0.15); padding-top: 1rem; font-style: italic; }
+  .project-result strong { color: var(--gold); font-style: normal; }
+  .project-link { display: inline-block; margin-top: 1rem; font-size: 0.8rem; color: var(--gold); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 2px; transition: opacity 0.2s; }
+  .project-link:hover { opacity: 0.7; }
+
+  /* ─── HIGHLIGHTS ─── */
+  #highlights { background: #f2ede5; }
+  .highlights-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .highlight-card { background: var(--card-bg); border: 1px solid var(--border); padding: 2rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: transform 0.25s, box-shadow 0.25s; }
+  .highlight-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.07); }
+  .highlight-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .highlight-text h4 { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .highlight-text p { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--cream); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; }
+  .service-card { border: 1.5px solid var(--border); padding: 2rem; transition: all 0.25s; cursor: default; }
+  .service-card:hover { border-color: var(--gold); background: var(--card-bg); transform: translateY(-3px); }
+  .service-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .service-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .service-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.7; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--ink); color: var(--cream); text-align: center; }
+  #contact .section-label { text-align: center; }
+  #contact .section-title { color: var(--cream); text-align: center; }
+  #contact .section-divider { margin-left: auto; margin-right: auto; }
+  .contact-intro { max-width: 540px; margin: 0 auto 3rem; color: rgba(247,244,239,0.65); font-size: 1rem; line-height: 1.8; }
+  .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.5rem; }
+  .contact-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.9rem 1.8rem; border: 1px solid rgba(201,168,76,0.35); color: var(--cream); text-decoration: none; font-size: 0.88rem; letter-spacing: 0.05em; transition: all 0.25s; }
+  .contact-link:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .contact-icon { font-size: 1rem; }
+
+  /* ─── FOOTER ─── */
+  footer { background: #0a0806; color: rgba(247,244,239,0.35); text-align: center; padding: 2rem 6%; font-size: 0.82rem; letter-spacing: 0.05em; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-text > * { animation: fadeUp 0.7s both; }
+  .hero-eyebrow  { animation-delay: 0.1s; }
+  .hero-name     { animation-delay: 0.2s; }
+  .hero-title    { animation-delay: 0.3s; }
+  .hero-bio      { animation-delay: 0.4s; }
+  .hero-ctas     { animation-delay: 0.5s; }
+  .hero-image-wrap { animation: fadeUp 0.9s 0.3s both; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    #hero { grid-template-columns: 1fr; padding-top: 7rem; }
+    .hero-image-wrap { order: -1; justify-content: center; }
+    .hero-photo-frame { width: min(280px, 80%); }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    nav { padding: 1rem 4%; }
+    .nav-links { gap: 1.2rem; }
+    section { padding: 4rem 5%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Ali EzzEldin</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">✦ Available for new projects</p>
+    <h1 class="hero-name">Ali<br>EzzEldin</h1>
+    <p class="hero-title">Machine Learning Engineer & Computer Vision Developer</p>
+    <p class="hero-bio">
+      I build intelligent Machine Learning and Computer Vision solutions that transform raw data into real-world impact. Passionate about AI, optimization, and solving complex problems for modern digital businesses.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-outline">Let's Talk</a>
+    </div>
+  </div>
+  <div class="hero-image-wrap">
+    <div class="hero-photo-frame">
+      <div class="hero-photo">
+        <div class="photo-placeholder-text">
+          <span class="photo-icon">📷</span>
+          <br><code>&lt;img src="your-photo.jpg" alt="Ali EzzEldin" class="hero-photo"&gt;</code>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-photo">
+      <span style="font-size:2rem; opacity:0.4;">📷</span>
+      Second photo (optional)
+    </div>
+    <div>
+      <p class="section-label">About Me</p>
+      <h2 class="section-title">Building intelligent systems<br>that solve real problems</h2>
+      <div class="section-divider"></div>
+      <p class="about-bio">
+        Hi, I'm Ali EzzEldin, a Computer Science student and Machine Learning Engineer passionate about building AI solutions that create measurable impact. My work focuses on Machine Learning, Computer Vision, data preprocessing, and model optimization — especially for real-world applications where performance and reliability matter.
+      </p>
+      <p class="about-bio">
+        I enjoy transforming raw and unstructured data into efficient systems that help businesses make smarter decisions and automate complex tasks. Beyond technical work, I value teamwork, honesty, and collaboration. My long-term goal is to build AI systems that solve meaningful challenges across industries.
+      </p>
+      <div class="about-details">
+        <div class="about-detail">
+          <span class="detail-label">Based in</span>
+          <span class="detail-value">Alexandria, Egypt</span>
+        </div>
+        <div class="about-detail">
+          <span class="detail-label">Experience</span>
+          <span class="detail-value">ML & Computer Vision Projects Since 2024</span>
+        </div>
+        <div class="about-detail">
+          <span class="detail-label">Focus</span>
+          <span class="detail-value">Machine Learning · Computer Vision · Data Analysis</span>
+        </div>
+        <div class="about-detail">
+          <span class="detail-label">Languages</span>
+          <span class="detail-value">Arabic · English</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">What I Do</p>
+  <h2 class="section-title">Skills & Tools</h2>
+  <div class="section-divider"></div>
+  <div class="skills-layout">
+    <div class="skill-card">
+      <div class="skill-card-icon">🤖</div>
+      <h3 class="skill-card-title">Machine Learning</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Machine Learning</span>
+        <span class="skill-tag">Deep Learning</span>
+        <span class="skill-tag">Model Optimization</span>
+        <span class="skill-tag">Feature Engineering</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">👁️</div>
+      <h3 class="skill-card-title">Computer Vision</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">OpenCV</span>
+        <span class="skill-tag">YOLO</span>
+        <span class="skill-tag">Object Detection</span>
+        <span class="skill-tag">Image Processing</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">📊</div>
+      <h3 class="skill-card-title">Data & Analytics</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Data Preprocessing</span>
+        <span class="skill-tag">EDA</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">NumPy</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-icon">🛠️</div>
+      <h3 class="skill-card-title">Development Tools</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">TensorFlow</span>
+        <span class="skill-tag">PyTorch</span>
+        <span class="skill-tag">Git</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK EXPERIENCE -->
+<section id="experience">
+  <p class="section-label">Career Path</p>
+  <h2 class="section-title">Work Experience</h2>
+  <div class="section-divider"></div>
+  <div class="exp-list">
+    <div class="exp-item">
+      <div class="exp-dates">
+        <span class="exp-year">2024 – Present</span>
+        Research & Freelance
+      </div>
+      <div>
+        <h3 class="exp-title">Machine Learning & Computer Vision Engineer</h3>
+        <p class="exp-company">Freelance & Research Projects · Egypt</p>
+        <p class="exp-desc">
+          Developed AI and Computer Vision solutions focused on object detection, tracking, and data-driven automation. Worked on optimizing Machine Learning pipelines, preprocessing datasets, and improving model performance for real-world applications.
+        </p>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dates">
+        <span class="exp-year">2024 – Present</span>
+        Team Member
+      </div>
+      <div>
+        <h3 class="exp-title">Computer Vision Team Member</h3>
+        <p class="exp-company">Vortex Titans · Alexandria</p>
+        <p class="exp-desc">
+          Collaborated on robotics and underwater AI projects involving Computer Vision, autonomous systems, and real-time object detection. Contributed to AI model development, optimization, and system integration within team-based engineering projects.
+        </p>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-dates">
+        <span class="exp-year">2024 – Present</span>
+        Freelance
+      </div>
+      <div>
+        <h3 class="exp-title">Freelance Machine Learning Engineer</h3>
+        <p class="exp-company">Self-Employed</p>
+        <p class="exp-desc">
+          Built Machine Learning and data analysis solutions for different project requirements, including predictive systems, preprocessing pipelines, and Computer Vision applications using Python and Deep Learning frameworks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <p class="section-label">Academic Background</p>
+  <h2 class="section-title">Education</h2>
+  <div class="section-divider"></div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <h3 class="edu-degree">Bachelor of Computer Science</h3>
+      <p class="edu-school">Faculty of Computer Science</p>
+      <p class="edu-year">Expected Graduation: 2026</p>
+    </div>
+    <div class="edu-card">
+      <h3 class="edu-degree">Machine Learning & Deep Learning Training</h3>
+      <p class="edu-school">Self-Learning & Online Platforms</p>
+      <p class="edu-year">2024 – Present</p>
+    </div>
+    <div class="edu-card">
+      <h3 class="edu-degree">Computer Vision & AI Projects</h3>
+      <p class="edu-school">Practical Research & Team Projects</p>
+      <p class="edu-year">2024 – Present</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Featured Work</p>
+  <h2 class="section-title">Selected Projects</h2>
+  <div class="section-divider"></div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-img">
+        <span style="font-size:2rem; opacity:0.3;">🖼</span>
+        Project Screenshot
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Computer Vision</span>
+          <span class="project-tag">Deep Learning</span>
+        </div>
+        <h3 class="project-title">Underwater Brittle Star Detection System</h3>
+        <p class="project-client">NOAA Ocean Exploration Challenge · ML Engineer</p>
+        <p class="project-desc">
+          Developed an underwater object detection system using YOLOv8 and SAHI techniques to identify brittle stars in challenging underwater environments with improved detection accuracy and scalability.
+        </p>
+        <p class="project-result">
+          <strong>Result:</strong> International-level competition performance — ranked among top global teams.
+        </p>
+        <a href="#" class="project-link">View Project →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-img">
+        <span style="font-size:2rem; opacity:0.3;">🖼</span>
+        Project Screenshot
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Robotics</span>
+          <span class="project-tag">AI</span>
+        </div>
+        <h3 class="project-title">Autonomous ROV Navigation System</h3>
+        <p class="project-client">Research & Robotics Project · Computer Vision Developer</p>
+        <p class="project-desc">
+          Worked on AI-powered underwater navigation using Oak-D cameras, Jetson Nano, and Computer Vision techniques for autonomous exploration and structure analysis.
+        </p>
+        <p class="project-result">
+          <strong>Result:</strong> Improved environmental awareness and real-time underwater decision-making capabilities.
+        </p>
+        <a href="#" class="project-link">View Project →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-img">
+        <span style="font-size:2rem; opacity:0.3;">🖼</span>
+        Project Screenshot
+      </div>
+      <div class="project-body">
+        <div class="project-tags">
+          <span class="project-tag">Machine Learning</span>
+          <span class="project-tag">Data Analysis</span>
+        </div>
+        <h3 class="project-title">Machine Learning Optimization Pipeline</h3>
+        <p class="project-client">Personal & Freelance Projects · ML Engineer</p>
+        <p class="project-desc">
+          Built preprocessing and optimization workflows for Machine Learning models, focusing on improving data quality, training efficiency, and predictive performance.
+        </p>
+        <p class="project-result">
+          <strong>Result:</strong> Enhanced model accuracy and reduced inefficiencies in training pipelines.
+        </p>
+        <a href="#" class="project-link">View Project →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- HIGHLIGHTS & ACHIEVEMENTS -->
+<section id="highlights">
+  <p class="section-label">Recognition & Impact</p>
+  <h2 class="section-title">Highlights & Achievements</h2>
+  <div class="section-divider"></div>
+  <div class="highlights-grid">
+    <div class="highlight-card">
+      <div class="highlight-icon">🏆</div>
+      <div class="highlight-text">
+        <h4>NOAA Ocean Exploration Challenge</h4>
+        <p>Ranked 7th internationally in a competitive AI and ocean exploration challenge, competing among top global teams with a custom YOLOv8 detection system.</p>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">🤖</div>
+      <div class="highlight-text">
+        <h4>Autonomous Underwater Robotics</h4>
+        <p>Contributed to building and deploying autonomous underwater ROV systems using Computer Vision and AI for real-time navigation and environmental analysis.</p>
+      </div>
+    </div>
+    <div class="highlight-card">
+      <div class="highlight-icon">🧠</div>
+      <div class="highlight-text">
+        <h4>Multiple AI & CV Projects</h4>
+        <p>Designed and delivered multiple end-to-end AI and Computer Vision projects using YOLO, OpenCV, TensorFlow, and PyTorch across research and freelance work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label">How I Can Help</p>
+  <h2 class="section-title">Services</h2>
+  <div class="section-divider"></div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <h3 class="service-title">Machine Learning Solutions</h3>
+      <p class="service-desc">Building intelligent ML models for prediction, classification, automation, and data-driven decision-making.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">👁️</div>
+      <h3 class="service-title">Computer Vision Applications</h3>
+      <p class="service-desc">Developing object detection, image processing, and real-time vision systems using OpenCV and Deep Learning.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3 class="service-title">Data Analysis & Optimization</h3>
+      <p class="service-desc">Cleaning, analyzing, and optimizing datasets and ML pipelines to improve performance and accuracy.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💡</div>
+      <h3 class="service-title">AI Consulting</h3>
+      <p class="service-desc">Providing technical guidance, project planning, and AI solution recommendations tailored to your goals.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Get In Touch</p>
+  <h2 class="section-title">Let's Work Together</h2>
+  <div class="section-divider"></div>
+  <p class="contact-intro">
+    Have a project in mind, or just want to connect? I'd love to hear from you.
+    Reach out through any of the channels below and I'll get back to you within 24 hours.
+  </p>
+  <div class="contact-links">
+    <a href="mailto:aliezz915@gmail.com" class="contact-link">
+      <span class="contact-icon">✉️</span> aliezz915@gmail.com
+    </a>
+    <a href="tel:+201129689150" class="contact-link">
+      <span class="contact-icon">📞</span> +20 112 968 9150
+    </a>
+    <a href="https://www.linkedin.com/in/ali-ezzeldin/" target="_blank" class="contact-link">
+      <span class="contact-icon">💼</span> LinkedIn
+    </a>
+    <a href="https://github.com/AlyEzzEldin" target="_blank" class="contact-link">
+      <span class="contact-icon">🐙</span> GitHub
+    </a>
+  </div>
+  <a href="mailto:aliezz915@gmail.com" class="btn-primary">Send Me a Message</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Ali EzzEldin · Machine Learning Engineer & Computer Vision Developer · Built with passion for AI</p>
+</footer>
+
+</body>
+</html>
